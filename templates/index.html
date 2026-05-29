@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}<title>Todo List</title>{% endblock %}
+
+{% block body %}
+<div class="card">
+
+  <div class="card-header">
+    <h1>My Tasks</h1>
+    <p class="subtitle">
+      {{ tasks|selectattr('completed')|list|length }} of {{ tasks|length }} completed
+    </p>
+  </div>
+
+  <div class="task-list">
+    {% if tasks|length < 1 %}
+      <div class="empty-state">No tasks yet. Add one below.</div>
+    {% else %}
+      {% for task in tasks %}
+        <div class="task-row {% if task.completed %}done{% endif %}">
+
+          <a href="/complete/{{ task.id }}" class="btn-complete" title="Toggle complete">
+            {% if task.completed %}✓{% endif %}
+          </a>
+
+          <span class="task-content">{{ task.content }}</span>
+
+          <div class="task-meta">
+            <span class="task-date">{{ task.date_created.strftime('%b %d') }}</span>
+            <div class="task-actions">
+              <a href="/update/{{ task.id }}" class="btn-edit">edit</a>
+              <a href="/delete/{{ task.id }}" class="btn-delete">del</a>
+            </div>
+          </div>
+
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <form action="/" method="post" class="add-form">
+    <input type="text" name="content" id="content" placeholder="Add a new task…" autocomplete="off" required>
+    <button type="submit">Add</button>
+  </form>
+
+</div>
+{% endblock %}
