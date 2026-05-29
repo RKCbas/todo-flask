@@ -34,7 +34,7 @@ def index():
         tasks = TODO.query.order_by(TODO.date_created).all()
         return render_template('index.html', tasks=tasks)
     
-@app.route('/complete/<int:id>')
+@app.route('/complete/<int:id>', methods=['GET'])
 def complete(id):
     task = TODO.query.get_or_404(id)
     task.completed = not task.completed
@@ -76,4 +76,4 @@ def update(id):
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=False)
