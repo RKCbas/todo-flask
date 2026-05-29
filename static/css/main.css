@@ -81,13 +81,6 @@ body {
   letter-spacing: 0.04em;
 }
 
-.empty-state::before {
-  content: '○';
-  display: block;
-  font-size: 2rem;
-  margin-bottom: 12px;
-  color: var(--border);
-}
 
 /* ── Task row ── */
 .task-row {
